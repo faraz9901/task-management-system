@@ -9,7 +9,7 @@ if (isTest) {
 }
 
 // Central place for reading and validating environment variables
-type ENV_VARIABLES = 'PORT' | 'NODE_ENV' | 'BASE_URL' | 'DB_HOST' | 'DB_USERNAME' | 'DB_PORT' | 'DB_PASSWORD' | 'DB_NAME' | 'STRIP_RESPONSES' | 'VALIDATE_RESPONSES' | 'ADMIN_NAME' | 'ADMIN_EMAIL' | 'ADMIN_PASSWORD' | "DB_URL";
+type ENV_VARIABLES = 'PORT' | 'NODE_ENV' | 'BASE_URL' | 'DB_HOST' | 'DB_USERNAME' | 'DB_PORT' | 'DB_PASSWORD' | 'DB_NAME' | 'STRIP_RESPONSES' | 'VALIDATE_RESPONSES' | 'ADMIN_NAME' | 'ADMIN_EMAIL' | 'ADMIN_PASSWORD' | "DB_URL" | "JWT_SECRET";
 
 class ConfigService {
 
@@ -69,6 +69,7 @@ const configService = new ConfigService(process.env)
         "DB_PASSWORD",
         "DB_NAME",
         "DB_URL",
+        "JWT_SECRET",
     ]);
 
 

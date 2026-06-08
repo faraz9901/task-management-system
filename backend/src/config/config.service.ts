@@ -9,25 +9,16 @@ if (isTest) {
 }
 
 // Central place for reading and validating environment variables
-const ENV_VARIABLES = {
-    PORT: 'PORT',
-    NODE_ENV: 'NODE_ENV',
-    BASE_URL: 'BASE_URL',
-    STRIP_RESPONSES: 'STRIP_RESPONSES',
-    VALIDATE_RESPONSES: 'VALIDATE_RESPONSES'
-} as const
-
-
-export type EnvVariableKey = keyof typeof ENV_VARIABLES;
+type ENV_VARIABLES = 'PORT' | 'NODE_ENV' | 'BASE_URL' | 'DB_HOST' | 'DB_USERNAME' | 'DB_PORT' | 'DB_PASSWORD' | 'DB_NAME' | 'STRIP_RESPONSES' | 'VALIDATE_RESPONSES' | 'ADMIN_NAME' | 'ADMIN_EMAIL' | 'ADMIN_PASSWORD' | "DB_URL";
 
 class ConfigService {
 
     constructor(private env: { [key: string]: string | undefined }) { }
 
     // Read a single environment variable and optionally throw if it is missing
-    getValue(key: EnvVariableKey, throwOnMissing = false): string {
+    getValue(key: ENV_VARIABLES, throwOnMissing = false): string {
 
-        const value = this.env[ENV_VARIABLES[key]];
+        const value = this.env[key];
         if (!value && throwOnMissing) {
             throw new Error(`config error - missing env.${key}`);
         }
@@ -36,7 +27,7 @@ class ConfigService {
     }
 
     // Ensure that all required keys exist when the app boots
-    public ensureValues(keys: EnvVariableKey[]) {
+    public ensureValues(keys: ENV_VARIABLES[]) {
         keys.forEach(k => this.getValue(k, true));
         return this;
     }
@@ -72,6 +63,12 @@ class ConfigService {
 const configService = new ConfigService(process.env)
     .ensureValues([
         "PORT",
+        "DB_HOST",
+        "DB_USERNAME",
+        "DB_PORT",
+        "DB_PASSWORD",
+        "DB_NAME",
+        "DB_URL",
     ]);
 
 

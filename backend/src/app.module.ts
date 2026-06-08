@@ -1,12 +1,14 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { TypeOrmModule } from "@nestjs/typeorm";
 import { AppController } from './app.controller';
 import { RequestMiddleware } from './common/request-logging/request.middleware';
-import { UsersModule } from './modules/users/users.module';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { CacheModule } from './modules/cache/cache.module';
 import { ShuttingDownHook } from './common/shuttingdown-hook';
-import { APP_GUARD } from '@nestjs/core';
+import { typeormConfig } from './config/datasource';
+import { TasksModule } from './modules/tasks/tasks.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -24,8 +26,11 @@ import { APP_GUARD } from '@nestjs/core';
       },
     ]),
 
+    // Database connection
+    TypeOrmModule.forRoot(typeormConfig),
+
     UsersModule,
-    CacheModule,
+    TasksModule,
   ],
   controllers: [AppController],
   providers: [

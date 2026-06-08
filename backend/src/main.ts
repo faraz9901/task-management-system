@@ -1,7 +1,12 @@
+import "reflect-metadata";
+
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/express-api-reference';
+import compression from 'compression';
+import { json } from 'express';
+import helmet from 'helmet';
 import redoc from 'redoc-express';
 import { AppModule } from './app.module';
 import { AllExceptionsFilter } from './common/errors';
@@ -9,9 +14,6 @@ import { NestWinstonLogger, winstonLogger } from './common/logger.service';
 import { ErrorBody, SuccessBody } from './common/swagger';
 import { configService } from './config/config.service';
 import { ResponseInterceptor } from './interceptors/responses.interceptor';
-import { json } from 'express';
-import compression from 'compression';
-import helmet from 'helmet';
 
 // Application entrypoint: creates the Nest app and wires up global behavior
 async function bootstrap() {

@@ -1,0 +1,8 @@
+services:
+  app:
+    container_name: "nest-starter"
+    build: .
+    ports:
+      - "9000:9000"
+    env_file:
+      - .env

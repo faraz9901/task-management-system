@@ -58,6 +58,12 @@ class ConfigService {
         return mode === 'true';
     }
 
+    public getOrigins() {
+        return [
+            "http://localhost:5173",
+        ]
+    }
+
 }
 
 const configService = new ConfigService(process.env)

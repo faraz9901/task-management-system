@@ -1,11 +1,18 @@
 import { BaseController } from '@/common/base.controller';
 import { AuthRequired, GetUser } from '@/common/jwt/auth.decorator';
+import { EmptyResponse } from '@/common/swagger';
 import { ApiRes } from '@/decorators/api-responses.decorator';
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/auth.dto';
-import { LoginResponse, UserResponse } from './dto/auth.responses';
+import { UserResponse } from './dto/auth.responses';
+
+
+const cookieOptions = {
+    httpOnly: true
+}
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -14,11 +21,17 @@ export class AuthController extends BaseController {
         super();
     }
 
-    @ApiRes('Login', LoginResponse)
+    @ApiRes('Login', EmptyResponse)
     @Post('login')
-    async login(@Body() body: LoginDto) {
-        const res = await this.authService.login(body.email, body.password);
-        return this.respondOk(res, "Login successful");
+    async login(
+        @Body() body: LoginDto,
+        @Res({ passthrough: true }) res: Response
+    ) {
+        const result = await this.authService.login(body.email, body.password);
+
+        res.cookie('token', result.token, cookieOptions);
+
+        return this.respondOk(null, "Login successful");
     }
 
     @AuthRequired()
@@ -27,6 +40,16 @@ export class AuthController extends BaseController {
     async getMe(@GetUser("id") id: string) {
         const res = await this.authService.getMe(id);
         return this.respondOk(res, "User found");
+    }
+
+    @ApiRes('Logout', EmptyResponse)
+    @Post('logout')
+    async logout(
+        @Res({ passthrough: true }) res: Response
+    ) {
+        res.cookie('token', "", cookieOptions);
+
+        return this.respondOk(null, "Logout successful");
     }
 
 }

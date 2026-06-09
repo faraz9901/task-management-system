@@ -96,10 +96,10 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   // Enable CORS (customize allowed origins via configService and uncomment below)
-  // app.enableCors({
-  //   origin: configService.getOrigins(),
-  //   credentials: true
-  // })
+  app.enableCors({
+    origin: configService.getOrigins(),
+    credentials: true
+  })
 
   // Start HTTP server on configured port
   await app.listen(port);

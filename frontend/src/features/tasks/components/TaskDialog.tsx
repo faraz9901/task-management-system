@@ -112,6 +112,7 @@ function TaskDialog({ task, children, mode }: Props) {
                             id="title"
                             name="title"
                             value={formData.title}
+                            disabled={isDisabled}
                             onChange={handleFormChange}
                         />
                     </div>

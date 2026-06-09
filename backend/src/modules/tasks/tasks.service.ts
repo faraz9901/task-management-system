@@ -136,9 +136,8 @@ export class TasksService extends BaseService {
         }
 
         if (user.role === "USER") {
-            // User can only update their task status title and description
+            // User can only update their task status and description
             existingTask.status = dto.status || existingTask.status
-            existingTask.title = dto.title || existingTask.title
             existingTask.description = dto.description || existingTask.description
         } else {
             Object.assign(existingTask, dto);

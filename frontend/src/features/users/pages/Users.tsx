@@ -2,14 +2,14 @@ import AuthenticatedRoute from "@/components/AuthenticatedRoute"
 import RoleGuard from "@/components/RoleGuard"
 import { Role } from "@/features/auth/types/auth.responses"
 
-function Home() {
+function Users() {
     return (
         <AuthenticatedRoute>
             <RoleGuard allowedRoles={[Role.ADMIN]} fallbackUrl={() => '/tasks'}>
-                <h1>Home</h1>
+                <h1>Users</h1>
             </RoleGuard>
         </AuthenticatedRoute>
     )
 }
 
-export default Home
+export default Users

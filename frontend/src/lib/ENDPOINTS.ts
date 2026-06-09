@@ -5,4 +5,20 @@ export const ENDPOINTS = {
         LOGOUT: "/auth/logout",
     },
 
+    USER: {
+        GET_ALL: "/users",
+        GET_ONE: "/users/:id",
+        CREATE: "/users",
+        UPDATE: "/users/:id",
+        DELETE: "/users/:id",
+    },
+
+    TASK: {
+        GET_ALL: "/tasks",
+        GET_MY_TASKS: "/tasks/me",
+        GET_ONE: "/tasks/:id",
+        CREATE: "/tasks",
+        UPDATE: "/tasks/:id",
+        DELETE: "/tasks/:id",
+    },
 }

@@ -60,7 +60,7 @@ class ConfigService {
     public getOrigins() {
         return [
             "http://localhost:5173",
-            "https://task-management-system-ruby-rho.vercel.app/"
+            "https://task-management-system-ruby-rho.vercel.app",
         ]
     }
 

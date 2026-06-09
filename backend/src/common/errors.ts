@@ -1,5 +1,6 @@
 import { configService } from '@/config/config.service';
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common';
+import { JsonWebTokenError } from '@nestjs/jwt';
 import { Response } from 'express';
 
 export enum ErrorCode {
@@ -171,6 +172,13 @@ export class AllExceptionsFilter implements ExceptionFilter {
             details = exception.details ?? null;
         }
 
+
+        else if (exception instanceof JsonWebTokenError) {
+            status = HttpStatus.UNAUTHORIZED;
+            message = 'Session Expired! Please login again.';
+            code = ErrorCode.UNAUTHORIZED;
+            details = null;
+        }
 
         /* ---------- NestJS HttpException ---------- */
         else if (exception instanceof HttpException) {

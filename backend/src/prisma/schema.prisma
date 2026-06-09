@@ -23,7 +23,7 @@ enum TaskPriority {
   LOW
   MEDIUM
   HIGH
-  CRTICAL
+  CRITICAL
 }
 
 model User {

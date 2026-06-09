@@ -3,7 +3,7 @@ export const TaskPriority = {
     LOW: 'LOW',
     MEDIUM: 'MEDIUM',
     HIGH: 'HIGH',
-    CRTICAL: 'CRTICAL'
+    CRITICAL: 'CRITICAL'
 } as const
 
 export type TaskPriority = typeof TaskPriority[keyof typeof TaskPriority]

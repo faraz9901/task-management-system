@@ -1,7 +1,6 @@
 import { ExposeApiProperty, ExposeOptionalApiProperty } from "@/decorators/expose-api-property.decorator";
-import { Task } from "@/prisma/generated/client";
+import { Task, TaskPriority, TaskStatus } from "@/prisma/generated/client";
 import { Optional } from "@nestjs/common";
-import { TaskPriority, TaskStatus } from "@prisma/client";
 import { IsDateString, IsEnum, IsString } from "class-validator";
 import { UserResponse } from "../../auth/dto/auth.responses";
 

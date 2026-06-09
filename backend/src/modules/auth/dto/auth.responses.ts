@@ -1,5 +1,5 @@
 import { ExposeApiProperty } from "@/decorators/expose-api-property.decorator";
-import { Role, User } from "@prisma/client";
+import { Role, User } from "@/prisma/generated/client";
 import { IsDate, IsEmail, IsEnum, IsString } from "class-validator";
 
 export class LoginResponse {

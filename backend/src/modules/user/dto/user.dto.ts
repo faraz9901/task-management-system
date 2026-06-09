@@ -1,7 +1,7 @@
 import { ExposeApiProperty } from "@/decorators/expose-api-property.decorator";
 import { Optional } from "@/decorators/optional.decorator";
 import { IsStrongPassword } from "@/modules/auth/dto/auth.dto";
-import { Role } from "@prisma/client";
+import { Role } from "@/prisma/generated/enums";
 import { IsEmail, IsEnum, IsNotIn, IsString, Length } from "class-validator";
 
 export class CreateUserDto {

@@ -1,5 +1,5 @@
+import { Role } from '@/prisma/generated/enums';
 import { applyDecorators, SetMetadata, UseGuards } from '@nestjs/common';
-import { Role } from '@prisma/client';
 import { JwtAuthGuard } from '../jwt/jwt.guard';
 import { RolesGuard } from './role.guard';
 

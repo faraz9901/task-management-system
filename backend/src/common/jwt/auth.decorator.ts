@@ -1,5 +1,6 @@
 import { applyDecorators, createParamDecorator, ExecutionContext, UseGuards } from '@nestjs/common';
-import { User } from '@prisma/client';
+
+import { User } from '@/prisma/generated/client';
 import { JwtAuthGuard } from './jwt.guard';
 
 

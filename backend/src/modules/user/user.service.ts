@@ -13,6 +13,9 @@ export class UserService extends BaseService {
 
         return prisma.user.findMany({
             where: {
+                NOT: {
+                    role: 'ADMIN',
+                },
                 ...(role && { role }),
                 ...(search && {
                     OR: [

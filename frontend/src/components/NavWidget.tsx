@@ -4,19 +4,16 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useIsAdmin } from "@/features/auth/hooks/useAuth";
+import { useIsAdmin, useLogout } from "@/features/auth/hooks/useAuth";
 import { navLinks } from "@/lib/constants";
-import { Menu } from "lucide-react";
+import { LogOut, Menu } from "lucide-react";
 import { Link, useLocation } from "react-router";
 import { Button } from "./ui/button";
 
 export default function NavWidget() {
     const location = useLocation();
     const isAdmin = useIsAdmin();
-
-    if (!isAdmin) {
-        return null;
-    }
+    const logout = useLogout();
 
     return (
         <div className="fixed bottom-4 right-4 z-50">
@@ -36,7 +33,7 @@ export default function NavWidget() {
                     side="top"
                     className="w-52"
                 >
-                    {navLinks.map((link) => {
+                    {isAdmin && navLinks.map((link) => {
                         const Icon = link.icon;
                         const active = location.pathname === link.path;
 
@@ -53,6 +50,19 @@ export default function NavWidget() {
                             </DropdownMenuItem>
                         );
                     })}
+
+
+
+                    <DropdownMenuItem asChild key={"logout-button"}>
+                        <span
+                            onClick={() => logout.mutateAsync()}
+                            className={`flex items-center gap-2 w-full`}
+                        >
+                            <LogOut className="h-4 w-4" />
+                            <span>{"Logout"}</span>
+                        </span>
+                    </DropdownMenuItem>
+
                 </DropdownMenuContent>
             </DropdownMenu>
         </div>

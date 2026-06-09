@@ -8,7 +8,7 @@ import { UserResponse } from '../auth/dto/auth.responses';
 import { CreateUserDto, UpdateUserDto, UserQueryDto } from './dto/user.dto';
 import { UserService } from './user.service';
 
-@Controller('user')
+@Controller('users')
 @ApiTags('User')
 @Roles('ADMIN')
 export class UserController extends BaseController {

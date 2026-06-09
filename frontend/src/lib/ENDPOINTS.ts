@@ -7,18 +7,18 @@ export const ENDPOINTS = {
 
     USER: {
         GET_ALL: "/users",
-        GET_ONE: "/users/:id",
+        GET_ONE: (id: string) => `/users/${id}`,
         CREATE: "/users",
-        UPDATE: "/users/:id",
-        DELETE: "/users/:id",
+        UPDATE: (id: string) => `/users/${id}`,
+        DELETE: (id: string) => `/users/${id}`,
     },
 
     TASK: {
         GET_ALL: "/tasks",
         GET_MY_TASKS: "/tasks/me",
-        GET_ONE: "/tasks/:id",
+        GET_ONE: (id: string) => `/tasks/${id}`,
         CREATE: "/tasks",
-        UPDATE: "/tasks/:id",
-        DELETE: "/tasks/:id",
+        UPDATE: (id: string) => `/tasks/${id}`,
+        DELETE: (id: string) => `/tasks/${id}`,
     },
 }

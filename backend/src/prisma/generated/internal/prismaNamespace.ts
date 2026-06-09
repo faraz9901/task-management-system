@@ -611,10 +611,10 @@ export const TaskScalarFieldEnum = {
   description: 'description',
   status: 'status',
   priority: 'priority',
+  dueDate: 'dueDate',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   createdById: 'createdById',
-  assignedById: 'assignedById',
   assignedToId: 'assignedToId'
 } as const
 
@@ -635,6 +635,14 @@ export const QueryMode = {
 } as const
 
 export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
 

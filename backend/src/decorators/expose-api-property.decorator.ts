@@ -30,3 +30,24 @@ export function ExposeApiProperty(options?: ExposeApiPropertyOptions): PropertyD
         }
     };
 }
+
+export function ExposeOptionalApiProperty(options?: Omit<ExposeApiPropertyOptions, "required">): PropertyDecorator {
+    return (target: any, propertyKey: string | symbol) => {
+        const { type, ...rest } = options || {};
+
+        // Apply class-transformer Expose
+        Expose()(target, propertyKey);
+
+        // Apply Swagger ApiProperty (include type if provided)
+        ApiProperty({
+            ...rest,
+            required: false,
+            type,
+        } as ApiPropertyOptions)(target, propertyKey);
+
+        // Apply class-transformer Type for nested DTOs
+        if (type) {
+            Type(() => type)(target, propertyKey);
+        }
+    };
+}

@@ -12,7 +12,7 @@ function PublicRoute({ children, redirectIfAuthenticated }: Props) {
 
     const { user, isLoading } = useAuth()
 
-    if (!isLoading) {
+    if (isLoading) {
         return <FullScreenLoader />
     }
 

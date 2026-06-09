@@ -200,7 +200,6 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   tasksCreated?: Prisma.TaskListRelationFilter
   tasksAssigned?: Prisma.TaskListRelationFilter
-  tasksGiven?: Prisma.TaskListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -213,7 +212,6 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   tasksCreated?: Prisma.TaskOrderByRelationAggregateInput
   tasksAssigned?: Prisma.TaskOrderByRelationAggregateInput
-  tasksGiven?: Prisma.TaskOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -229,7 +227,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   tasksCreated?: Prisma.TaskListRelationFilter
   tasksAssigned?: Prisma.TaskListRelationFilter
-  tasksGiven?: Prisma.TaskListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -268,7 +265,6 @@ export type UserCreateInput = {
   updatedAt?: Date | string
   tasksCreated?: Prisma.TaskCreateNestedManyWithoutCreatedByInput
   tasksAssigned?: Prisma.TaskCreateNestedManyWithoutAssignedToInput
-  tasksGiven?: Prisma.TaskCreateNestedManyWithoutAssignedByInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -281,7 +277,6 @@ export type UserUncheckedCreateInput = {
   updatedAt?: Date | string
   tasksCreated?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput
   tasksAssigned?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput
-  tasksGiven?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedByInput
 }
 
 export type UserUpdateInput = {
@@ -294,7 +289,6 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasksCreated?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput
   tasksAssigned?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput
-  tasksGiven?: Prisma.TaskUpdateManyWithoutAssignedByNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -307,7 +301,6 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasksCreated?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput
   tasksAssigned?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput
-  tasksGiven?: Prisma.TaskUncheckedUpdateManyWithoutAssignedByNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -375,6 +368,11 @@ export type UserScalarRelationFilter = {
   isNot?: Prisma.UserWhereInput
 }
 
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
+}
+
 export type StringFieldUpdateOperationsInput = {
   set?: string
 }
@@ -393,12 +391,6 @@ export type UserCreateNestedOneWithoutTasksCreatedInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
-export type UserCreateNestedOneWithoutTasksGivenInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTasksGivenInput, Prisma.UserUncheckedCreateWithoutTasksGivenInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTasksGivenInput
-  connect?: Prisma.UserWhereUniqueInput
-}
-
 export type UserCreateNestedOneWithoutTasksAssignedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTasksAssignedInput, Prisma.UserUncheckedCreateWithoutTasksAssignedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTasksAssignedInput
@@ -413,18 +405,12 @@ export type UserUpdateOneRequiredWithoutTasksCreatedNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTasksCreatedInput, Prisma.UserUpdateWithoutTasksCreatedInput>, Prisma.UserUncheckedUpdateWithoutTasksCreatedInput>
 }
 
-export type UserUpdateOneRequiredWithoutTasksGivenNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutTasksGivenInput, Prisma.UserUncheckedCreateWithoutTasksGivenInput>
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutTasksGivenInput
-  upsert?: Prisma.UserUpsertWithoutTasksGivenInput
-  connect?: Prisma.UserWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTasksGivenInput, Prisma.UserUpdateWithoutTasksGivenInput>, Prisma.UserUncheckedUpdateWithoutTasksGivenInput>
-}
-
-export type UserUpdateOneRequiredWithoutTasksAssignedNestedInput = {
+export type UserUpdateOneWithoutTasksAssignedNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutTasksAssignedInput, Prisma.UserUncheckedCreateWithoutTasksAssignedInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutTasksAssignedInput
   upsert?: Prisma.UserUpsertWithoutTasksAssignedInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTasksAssignedInput, Prisma.UserUpdateWithoutTasksAssignedInput>, Prisma.UserUncheckedUpdateWithoutTasksAssignedInput>
 }
@@ -438,7 +424,6 @@ export type UserCreateWithoutTasksCreatedInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tasksAssigned?: Prisma.TaskCreateNestedManyWithoutAssignedToInput
-  tasksGiven?: Prisma.TaskCreateNestedManyWithoutAssignedByInput
 }
 
 export type UserUncheckedCreateWithoutTasksCreatedInput = {
@@ -450,41 +435,11 @@ export type UserUncheckedCreateWithoutTasksCreatedInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tasksAssigned?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput
-  tasksGiven?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedByInput
 }
 
 export type UserCreateOrConnectWithoutTasksCreatedInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutTasksCreatedInput, Prisma.UserUncheckedCreateWithoutTasksCreatedInput>
-}
-
-export type UserCreateWithoutTasksGivenInput = {
-  id?: string
-  name: string
-  email: string
-  passwordHash: string
-  role?: $Enums.Role
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tasksCreated?: Prisma.TaskCreateNestedManyWithoutCreatedByInput
-  tasksAssigned?: Prisma.TaskCreateNestedManyWithoutAssignedToInput
-}
-
-export type UserUncheckedCreateWithoutTasksGivenInput = {
-  id?: string
-  name: string
-  email: string
-  passwordHash: string
-  role?: $Enums.Role
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tasksCreated?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput
-  tasksAssigned?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedToInput
-}
-
-export type UserCreateOrConnectWithoutTasksGivenInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutTasksGivenInput, Prisma.UserUncheckedCreateWithoutTasksGivenInput>
 }
 
 export type UserCreateWithoutTasksAssignedInput = {
@@ -496,7 +451,6 @@ export type UserCreateWithoutTasksAssignedInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tasksCreated?: Prisma.TaskCreateNestedManyWithoutCreatedByInput
-  tasksGiven?: Prisma.TaskCreateNestedManyWithoutAssignedByInput
 }
 
 export type UserUncheckedCreateWithoutTasksAssignedInput = {
@@ -508,7 +462,6 @@ export type UserUncheckedCreateWithoutTasksAssignedInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   tasksCreated?: Prisma.TaskUncheckedCreateNestedManyWithoutCreatedByInput
-  tasksGiven?: Prisma.TaskUncheckedCreateNestedManyWithoutAssignedByInput
 }
 
 export type UserCreateOrConnectWithoutTasksAssignedInput = {
@@ -536,7 +489,6 @@ export type UserUpdateWithoutTasksCreatedInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasksAssigned?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput
-  tasksGiven?: Prisma.TaskUpdateManyWithoutAssignedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksCreatedInput = {
@@ -547,42 +499,6 @@ export type UserUncheckedUpdateWithoutTasksCreatedInput = {
   role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tasksAssigned?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput
-  tasksGiven?: Prisma.TaskUncheckedUpdateManyWithoutAssignedByNestedInput
-}
-
-export type UserUpsertWithoutTasksGivenInput = {
-  update: Prisma.XOR<Prisma.UserUpdateWithoutTasksGivenInput, Prisma.UserUncheckedUpdateWithoutTasksGivenInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutTasksGivenInput, Prisma.UserUncheckedCreateWithoutTasksGivenInput>
-  where?: Prisma.UserWhereInput
-}
-
-export type UserUpdateToOneWithWhereWithoutTasksGivenInput = {
-  where?: Prisma.UserWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutTasksGivenInput, Prisma.UserUncheckedUpdateWithoutTasksGivenInput>
-}
-
-export type UserUpdateWithoutTasksGivenInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tasksCreated?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput
-  tasksAssigned?: Prisma.TaskUpdateManyWithoutAssignedToNestedInput
-}
-
-export type UserUncheckedUpdateWithoutTasksGivenInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
-  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tasksCreated?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput
   tasksAssigned?: Prisma.TaskUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
@@ -606,7 +522,6 @@ export type UserUpdateWithoutTasksAssignedInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasksCreated?: Prisma.TaskUpdateManyWithoutCreatedByNestedInput
-  tasksGiven?: Prisma.TaskUpdateManyWithoutAssignedByNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTasksAssignedInput = {
@@ -618,7 +533,6 @@ export type UserUncheckedUpdateWithoutTasksAssignedInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tasksCreated?: Prisma.TaskUncheckedUpdateManyWithoutCreatedByNestedInput
-  tasksGiven?: Prisma.TaskUncheckedUpdateManyWithoutAssignedByNestedInput
 }
 
 
@@ -629,13 +543,11 @@ export type UserUncheckedUpdateWithoutTasksAssignedInput = {
 export type UserCountOutputType = {
   tasksCreated: number
   tasksAssigned: number
-  tasksGiven: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasksCreated?: boolean | UserCountOutputTypeCountTasksCreatedArgs
   tasksAssigned?: boolean | UserCountOutputTypeCountTasksAssignedArgs
-  tasksGiven?: boolean | UserCountOutputTypeCountTasksGivenArgs
 }
 
 /**
@@ -662,13 +574,6 @@ export type UserCountOutputTypeCountTasksAssignedArgs<ExtArgs extends runtime.Ty
   where?: Prisma.TaskWhereInput
 }
 
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountTasksGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TaskWhereInput
-}
-
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -680,7 +585,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   tasksCreated?: boolean | Prisma.User$tasksCreatedArgs<ExtArgs>
   tasksAssigned?: boolean | Prisma.User$tasksAssignedArgs<ExtArgs>
-  tasksGiven?: boolean | Prisma.User$tasksGivenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -718,7 +622,6 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   tasksCreated?: boolean | Prisma.User$tasksCreatedArgs<ExtArgs>
   tasksAssigned?: boolean | Prisma.User$tasksAssignedArgs<ExtArgs>
-  tasksGiven?: boolean | Prisma.User$tasksGivenArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -729,7 +632,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     tasksCreated: Prisma.$TaskPayload<ExtArgs>[]
     tasksAssigned: Prisma.$TaskPayload<ExtArgs>[]
-    tasksGiven: Prisma.$TaskPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1135,7 +1037,6 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   tasksCreated<T extends Prisma.User$tasksCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tasksAssigned<T extends Prisma.User$tasksAssignedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksAssignedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tasksGiven<T extends Prisma.User$tasksGivenArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$tasksGivenArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1592,30 +1493,6 @@ export type User$tasksCreatedArgs<ExtArgs extends runtime.Types.Extensions.Inter
  * User.tasksAssigned
  */
 export type User$tasksAssignedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Task
-   */
-  select?: Prisma.TaskSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Task
-   */
-  omit?: Prisma.TaskOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TaskInclude<ExtArgs> | null
-  where?: Prisma.TaskWhereInput
-  orderBy?: Prisma.TaskOrderByWithRelationInput | Prisma.TaskOrderByWithRelationInput[]
-  cursor?: Prisma.TaskWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
-}
-
-/**
- * User.tasksGiven
- */
-export type User$tasksGivenArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   /**
    * Select specific fields to fetch from the Task
    */

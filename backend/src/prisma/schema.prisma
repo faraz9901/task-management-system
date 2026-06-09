@@ -39,7 +39,6 @@ model User {
   // relations
   tasksCreated Task[] @relation("TaskCreatedBy")
   tasksAssigned Task[] @relation("TaskAssignedTo")
-  tasksGiven    Task[] @relation("TaskAssignedBy")
 
   @@map("users")
 }
@@ -50,21 +49,18 @@ model Task {
   description String
   status      TaskStatus   @default(TODO)
   priority    TaskPriority @default(MEDIUM)
+  dueDate     DateTime?
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  // Who created the task
+  // Who created the task (required)
   createdById String
   createdBy   User @relation("TaskCreatedBy", fields: [createdById], references: [id])
 
-  // Who assigned the task
-  assignedById String
-  assignedBy   User @relation("TaskAssignedBy", fields: [assignedById], references: [id])
-
-  // Who the task is assigned to
-  assignedToId String
-  assignedTo   User @relation("TaskAssignedTo", fields: [assignedToId], references: [id])
+  // Who the task is assigned to (optional)
+  assignedToId String?
+  assignedTo   User? @relation("TaskAssignedTo", fields: [assignedToId], references: [id])
 
   @@map("tasks")
 }

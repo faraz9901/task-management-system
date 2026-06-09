@@ -5,9 +5,9 @@ import { EmptyResponse } from '@/common/swagger';
 import { ApiRes } from '@/decorators/api-responses.decorator';
 import { User } from '@/prisma/generated/client';
 import { Role } from '@/prisma/generated/enums';
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateTaskDto, UpdateTaskDto } from './dto/task.dto';
+import { CreateTaskDto, TaskQueryDto, UpdateTaskDto } from './dto/task.dto';
 import { TaskResponse } from './dto/task.responses';
 import { TasksService } from './tasks.service';
 
@@ -23,15 +23,15 @@ export class TasksController extends BaseController {
     @ApiRes('Get task', TaskResponse, HttpStatus.OK, { isArray: true })
     @Roles(Role.ADMIN)
     @Get()
-    async getAllTasks() {
-        const tasks = await this.tasksService.getAllTasks();
+    async getAllTasks(@Query() query: TaskQueryDto) {
+        const tasks = await this.tasksService.getAllTasks(query);
         return this.respondOk(tasks, 'Tasks Fetched Successfully');
     }
 
     @ApiRes('Get user tasks', TaskResponse, HttpStatus.OK, { isArray: true })
     @Get('me')
-    async getUserTasks(@GetUser('id') userId: string) {
-        const tasks = await this.tasksService.getUserTasks(userId);
+    async getUserTasks(@GetUser('id') userId: string, @Query() query: TaskQueryDto) {
+        const tasks = await this.tasksService.getUserTasks(userId, query);
         return this.respondOk(tasks, 'Tasks Fetched Successfully');
     }
 

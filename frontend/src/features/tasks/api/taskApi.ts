@@ -1,16 +1,16 @@
 import { api } from "@/lib/api"
 import { ENDPOINTS } from "@/lib/ENDPOINTS"
-import type { CreateTaskDto, UpdateTaskDto } from "../types/task.dto"
+import type { CreateTaskDto, TaskQueryDto, UpdateTaskDto } from "../types/task.dto"
 import { type TaskResponse } from "../types/task.responses"
 
 export const taskApi = {
 
-    getTasks() {
-        return api.get<TaskResponse[]>(ENDPOINTS.TASK.GET_ALL)
+    getTasks(query: TaskQueryDto) {
+        return api.get<TaskResponse[]>(ENDPOINTS.TASK.GET_ALL, { params: query })
     },
 
-    getMyTasks() {
-        return api.get<TaskResponse[]>(ENDPOINTS.TASK.GET_MY_TASKS)
+    getMyTasks(query: TaskQueryDto) {
+        return api.get<TaskResponse[]>(ENDPOINTS.TASK.GET_MY_TASKS, { params: query })
     },
 
     getTask(id: string) {

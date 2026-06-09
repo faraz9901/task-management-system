@@ -73,3 +73,22 @@ export class UpdateTaskDto implements Partial<CreateTask> {
     @IsString({ message: 'Assigned to is invalid' })
     assignedToId: string | null;
 }
+
+
+export class TaskQueryDto {
+
+    @ExposeApiProperty({ example: 'Task title' })
+    @Optional()
+    @IsString({ message: 'Title is invalid' })
+    title?: string;
+
+    @ExposeApiProperty({ example: 'Task description', enum: TaskPriority })
+    @Optional()
+    @IsEnum(TaskPriority, { message: 'Priority is invalid' })
+    priority?: TaskPriority;
+
+    @ExposeApiProperty({ example: TaskStatus.TODO, enum: TaskStatus })
+    @Optional()
+    @IsEnum(TaskStatus, { message: 'Status is invalid' })
+    status?: TaskStatus;
+}

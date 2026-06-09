@@ -3,7 +3,7 @@ import { HTTPEXCEPTION } from '@/common/errors';
 import { Task, User } from '@/prisma/generated/client';
 import { prisma } from '@/utils/prismaClient';
 import { Injectable } from '@nestjs/common';
-import { CreateTaskDto, UpdateTaskDto } from './dto/task.dto';
+import { CreateTaskDto, TaskQueryDto, UpdateTaskDto } from './dto/task.dto';
 import { TaskResponse } from './dto/task.responses';
 
 @Injectable()
@@ -62,9 +62,17 @@ export class TasksService extends BaseService {
     }
 
 
-    async getAllTasks(): Promise<TaskResponse[]> {
+    async getAllTasks(query: TaskQueryDto): Promise<TaskResponse[]> {
+
+        const { priority, status, title } = query
+
 
         const tasks = await prisma.task.findMany({
+            where: {
+                ...(priority && { priority }),
+                ...(status && { status }),
+                ...(title && { title: { contains: title, mode: 'insensitive' } }),
+            },
             include: {
                 assignedTo: true,
                 createdBy: true,
@@ -75,12 +83,16 @@ export class TasksService extends BaseService {
     }
 
 
-    async getUserTasks(userId: string): Promise<TaskResponse[]> {
+    async getUserTasks(userId: string, query: TaskQueryDto): Promise<TaskResponse[]> {
 
-        console.log(userId);
+        const { priority, status, title } = query
 
         const tasks = await prisma.task.findMany({
             where: {
+                ...(priority && { priority }),
+                ...(status && { status }),
+                ...(title && { title: { contains: title, mode: 'insensitive' } }),
+
                 OR: [
                     { createdById: userId },
                     { assignedToId: userId },

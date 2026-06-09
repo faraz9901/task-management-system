@@ -34,3 +34,10 @@ export interface UpdateTaskDto {
     status?: TaskStatus;
     assignedToId: string | null;
 }
+
+
+export interface TaskQueryDto {
+    title?: string;
+    priority?: TaskPriority;
+    status?: TaskStatus;
+}

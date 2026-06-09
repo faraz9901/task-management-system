@@ -1,6 +1,7 @@
 import { BaseController } from '@/common/base.controller';
 import { AuthRequired, GetUser } from '@/common/jwt/auth.decorator';
 import { EmptyResponse } from '@/common/swagger';
+import { configService } from '@/config/config.service';
 import { ApiRes } from '@/decorators/api-responses.decorator';
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -12,7 +13,8 @@ import { UserResponse } from './dto/auth.responses';
 
 const cookieOptions: CookieOptions = {
     httpOnly: true,
-    sameSite: 'lax',
+    secure: configService.isProduction(),
+    sameSite: configService.isProduction() ? 'none' : 'lax',
     expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
 }
 

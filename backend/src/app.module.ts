@@ -7,7 +7,7 @@ import { RequestMiddleware } from './common/request-logging/request.middleware';
 import { ShuttingDownHook } from './common/shuttingdown-hook';
 import { AuthModule } from './modules/auth/auth.module';
 import { TasksModule } from './modules/tasks/tasks.module';
-import { UsersModule } from './modules/users/users.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -25,9 +25,9 @@ import { UsersModule } from './modules/users/users.module';
       },
     ]),
 
-    UsersModule,
     TasksModule,
     AuthModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [

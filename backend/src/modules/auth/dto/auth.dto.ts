@@ -15,6 +15,8 @@ export function IsStrongPassword(validationOptions?: ValidationOptions) {
                     // Minimum 8 chars
                     if (value.length < 8) return false;
 
+                    if (value.length > 20) return false;
+
                     // At least one letter
                     const hasLetter = /[A-Za-z]/.test(value);
 
@@ -27,7 +29,7 @@ export function IsStrongPassword(validationOptions?: ValidationOptions) {
                     return hasLetter && hasNumber && hasSpecial;
                 },
                 defaultMessage(args: ValidationArguments) {
-                    return `${args.property} must be at least 8 characters long and include at least one letter, one number, and one special character`;
+                    return `${args.property} must be at least 8 characters long upto 20 and include at least one letter, one number, and one special character`;
                 },
             },
         });

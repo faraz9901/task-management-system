@@ -1,4 +1,25 @@
+import { BaseController } from '@/common/base.controller';
 import { Controller } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 
 @Controller('tasks')
-export class TasksController {}
+@ApiTags('Tasks')
+export class TasksController extends BaseController {
+
+    createTask() { }
+
+
+    updateTask() { }
+
+
+    deleteTask() { }
+
+
+    getTask() { }
+
+
+    getAllTasks() { }
+
+
+    getUserTasks() { }
+}

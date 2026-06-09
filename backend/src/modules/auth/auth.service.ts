@@ -4,7 +4,7 @@ import { prisma } from '@/utils/prismaClient';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as argon2 from "argon2";
-import { LoginResponseDto } from './dto/auth.responses';
+import { LoginResponse } from './dto/auth.responses';
 
 
 @Injectable()
@@ -13,7 +13,7 @@ export class AuthService extends BaseService {
         super();
     }
 
-    async login(email: string, password: string): Promise<LoginResponseDto> {
+    async login(email: string, password: string): Promise<LoginResponse> {
         const user = await prisma.user.findUnique({
             where: { email },
         });
@@ -42,5 +42,11 @@ export class AuthService extends BaseService {
         return {
             token,
         };
+    }
+
+
+    async getMe(id: string) {
+        const user = await prisma.user.findUnique({ where: { id } });
+        return user;
     }
 }

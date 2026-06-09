@@ -3,7 +3,7 @@ import { HTTPEXCEPTION } from '@/common/errors';
 import { Task, User } from '@/prisma/generated/client';
 import { prisma } from '@/utils/prismaClient';
 import { Injectable } from '@nestjs/common';
-import { CreateTaskDto } from './dto/task.dto';
+import { CreateTaskDto, UpdateTaskDto } from './dto/task.dto';
 import { TaskResponse } from './dto/task.responses';
 
 @Injectable()
@@ -24,6 +24,16 @@ export class TasksService extends BaseService {
     }
 
     async createTask(dto: CreateTaskDto, userId: string): Promise<TaskResponse> {
+
+        if (dto.assignedToId) {
+            const existingUser = await prisma.user.findUnique({ where: { id: dto.assignedToId } });
+
+            if (!existingUser) {
+                throw HTTPEXCEPTION.NOT_FOUND('The Assigned User not found');
+            }
+        }
+
+
         const task = await prisma.task.create({ data: { ...dto, createdById: userId } });
         return task;
     }
@@ -66,6 +76,9 @@ export class TasksService extends BaseService {
 
 
     async getUserTasks(userId: string): Promise<TaskResponse[]> {
+
+        console.log(userId);
+
         const tasks = await prisma.task.findMany({
             where: {
                 OR: [
@@ -83,7 +96,7 @@ export class TasksService extends BaseService {
     }
 
 
-    async updateTask(id: string, dto: CreateTaskDto, user: User): Promise<TaskResponse> {
+    async updateTask(id: string, dto: UpdateTaskDto, user: User): Promise<TaskResponse> {
 
         const existingTask = await prisma.task.findUnique({ where: { id } });
 
@@ -102,13 +115,21 @@ export class TasksService extends BaseService {
             throw HTTPEXCEPTION.UNAUTHORIZED('You are not authorized to update this task');
         }
 
+        if (dto.assignedToId) {
+            const existingUser = await prisma.user.findUnique({ where: { id: dto.assignedToId } });
 
-        if (user.role === "MANAGER") {
-            Object.assign(existingTask, dto);
+            if (!existingUser) {
+                throw HTTPEXCEPTION.NOT_FOUND('The Assigned User not found');
+            }
+        }
+
+        if (user.role === "USER") {
+            // User can only update their task status title and description
+            existingTask.status = dto.status || existingTask.status
+            existingTask.title = dto.title || existingTask.title
+            existingTask.description = dto.description || existingTask.description
         } else {
-            existingTask.status = dto.status
-            existingTask.title = dto.title
-            existingTask.description = dto.description
+            Object.assign(existingTask, dto);
         }
 
         return await prisma.task.update({ where: { id }, data: existingTask });

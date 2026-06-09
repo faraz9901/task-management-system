@@ -76,3 +76,6 @@ export const useLogout = () => {
 
 
 export const useIsAdmin = () => useAuth((state) => state.user?.role === "ADMIN");
+
+
+export const useRole = () => useAuth((state) => state.user?.role);

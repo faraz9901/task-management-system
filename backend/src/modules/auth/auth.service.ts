@@ -36,9 +36,6 @@ export class AuthService extends BaseService {
 
         const token = this.jwtService.sign(payload);
 
-        this.logger.info(`User ${user.email} logged in`, { email: user.email, token });
-
-
         return {
             token,
         };

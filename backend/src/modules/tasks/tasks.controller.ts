@@ -1,5 +1,5 @@
 import { BaseController } from '@/common/base.controller';
-import { GetUser } from '@/common/jwt/auth.decorator';
+import { AuthRequired, GetUser } from '@/common/jwt/auth.decorator';
 import { Roles } from '@/common/roles/role.decorator';
 import { EmptyResponse } from '@/common/swagger';
 import { ApiRes } from '@/decorators/api-responses.decorator';
@@ -7,11 +7,12 @@ import { User } from '@/prisma/generated/client';
 import { Role } from '@/prisma/generated/enums';
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateTaskDto } from './dto/task.dto';
+import { CreateTaskDto, UpdateTaskDto } from './dto/task.dto';
 import { TaskResponse } from './dto/task.responses';
 import { TasksService } from './tasks.service';
 
 @Controller('tasks')
+@AuthRequired()
 @ApiTags('Tasks')
 export class TasksController extends BaseController {
 
@@ -45,7 +46,7 @@ export class TasksController extends BaseController {
 
     @ApiRes('Update task', TaskResponse, HttpStatus.OK)
     @Put(':id')
-    async updateTask(@Body() dto: CreateTaskDto, @Param('id') id: string, @GetUser() user: User) {
+    async updateTask(@Body() dto: UpdateTaskDto, @Param('id') id: string, @GetUser() user: User) {
         const task = await this.tasksService.updateTask(id, dto, user);
         return this.respondOk(task, 'Task Updated Successfully');
     }

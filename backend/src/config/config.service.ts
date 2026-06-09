@@ -54,8 +54,7 @@ class ConfigService {
     }
 
     public validateResponses() {
-        const mode = this.getValue("VALIDATE_RESPONSES")
-        return mode === 'true';
+        return false
     }
 
     public getOrigins() {

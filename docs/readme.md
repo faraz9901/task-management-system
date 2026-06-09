@@ -249,7 +249,7 @@ Swagger documentation is automatically generated and available after starting th
 Example:
 
 ```text
-http://localhost:3000/api/docs
+http://localhost:9000/api/docs
 ```
 
 ---

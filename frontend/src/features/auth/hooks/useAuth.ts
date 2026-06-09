@@ -73,3 +73,6 @@ export const useLogout = () => {
         onError: onError
     });
 };
+
+
+export const useIsAdmin = () => useAuth((state) => state.user?.role === "ADMIN");

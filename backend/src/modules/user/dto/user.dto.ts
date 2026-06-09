@@ -2,7 +2,7 @@ import { ExposeApiProperty } from "@/decorators/expose-api-property.decorator";
 import { Optional } from "@/decorators/optional.decorator";
 import { IsStrongPassword } from "@/modules/auth/dto/auth.dto";
 import { Role } from "@prisma/client";
-import { IsEmail, IsEnum, IsString, Length } from "class-validator";
+import { IsEmail, IsEnum, IsNotIn, IsString, Length } from "class-validator";
 
 export class CreateUserDto {
     @ExposeApiProperty({ example: 'john@example.com' })
@@ -22,6 +22,7 @@ export class CreateUserDto {
 
     @ExposeApiProperty({ example: Role.ADMIN, enum: Role })
     @IsEnum(Role, { message: 'Role is invalid' })
+    @IsNotIn([Role.ADMIN], { message: 'Only one admin is allowed' })
     role: Role
 }
 
@@ -47,6 +48,7 @@ export class UpdateUserDto {
     @ExposeApiProperty({ example: Role.ADMIN, enum: Role, required: false })
     @Optional()
     @IsEnum(Role, { message: 'Role is invalid' })
+    @IsNotIn([Role.ADMIN], { message: 'Only one admin is allowed' })
     role?: Role
 }
 

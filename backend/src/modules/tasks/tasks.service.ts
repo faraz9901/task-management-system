@@ -30,7 +30,7 @@ export class TasksService extends BaseService {
 
     async getTask(id: string, user: User): Promise<TaskResponse> {
 
-        const task = await prisma.task.findUnique({ where: { id } });
+        const task = await prisma.task.findUnique({ where: { id }, include: { assignedTo: true, createdBy: true } });
 
         if (!task) {
             throw HTTPEXCEPTION.NOT_FOUND('Task not found');
@@ -103,7 +103,13 @@ export class TasksService extends BaseService {
         }
 
 
-        Object.assign(existingTask, dto);
+        if (user.role === "MANAGER") {
+            Object.assign(existingTask, dto);
+        } else {
+            existingTask.status = dto.status
+            existingTask.title = dto.title
+            existingTask.description = dto.description
+        }
 
         return await prisma.task.update({ where: { id }, data: existingTask });
     }

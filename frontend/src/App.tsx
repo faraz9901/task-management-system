@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router';
 import { Toaster } from 'sonner';
+import NavWidget from './components/NavWidget';
 import LoginPage from './features/auth/components/LoginPage';
 import { useMe } from './features/auth/hooks/useAuth';
 import Home from './features/dashboard/pages/Home';
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
       </Routes>
       <Toaster richColors />
+      <NavWidget />
     </>
   )
 }

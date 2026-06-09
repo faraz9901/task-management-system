@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { apiReference } from '@scalar/express-api-reference';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 import { json } from 'express';
 import helmet from 'helmet';
 import redoc from 'redoc-express';
@@ -20,6 +21,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: new NestWinstonLogger(winstonLogger),
   });
+
+
+  app.use(cookieParser());
+
 
   // Enable validation pipes globally so all incoming DTOs are validated
   app.useGlobalPipes(

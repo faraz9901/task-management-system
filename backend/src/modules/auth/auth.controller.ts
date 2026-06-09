@@ -4,14 +4,16 @@ import { EmptyResponse } from '@/common/swagger';
 import { ApiRes } from '@/decorators/api-responses.decorator';
 import { Body, Controller, Get, Post, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
+import { CookieOptions, Response } from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/auth.dto';
 import { UserResponse } from './dto/auth.responses';
 
 
-const cookieOptions = {
-    httpOnly: true
+const cookieOptions: CookieOptions = {
+    httpOnly: true,
+    sameSite: 'lax',
+    expires: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 day
 }
 
 @Controller('auth')
@@ -47,7 +49,10 @@ export class AuthController extends BaseController {
     async logout(
         @Res({ passthrough: true }) res: Response
     ) {
-        res.cookie('token', "", cookieOptions);
+        res.cookie('token', '', {
+            ...cookieOptions,
+            expires: new Date(0),
+        });
 
         return this.respondOk(null, "Logout successful");
     }

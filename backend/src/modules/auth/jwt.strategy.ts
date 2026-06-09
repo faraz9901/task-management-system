@@ -3,6 +3,7 @@ import { configService } from '@/config/config.service';
 import { prisma } from '@/utils/prismaClient';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
+import { Request } from 'express';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 
 interface DecodedToken {
@@ -11,15 +12,25 @@ interface DecodedToken {
     role: string;
 }
 
+
+const cookieExtractor = (req: Request): string | null => {
+    if (req?.cookies?.token) {
+        return req.cookies.token;
+    }
+    return null;
+};
+
+
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
     constructor() {
         super({
-            jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: configService.getValue("JWT_SECRET"),
+            jwtFromRequest: ExtractJwt.fromExtractors([
+                cookieExtractor,
+            ]),
+            secretOrKey: configService.getValue('JWT_SECRET'),
         });
     }
-
     async validate(payload: DecodedToken) {
 
 
